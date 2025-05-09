@@ -3,9 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Church Donation Tracker</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Welcome to the Home Page</h1>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <!-- Header -->
+    <header class="bg-indigo-700 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+          
+          <!-- Logo -->
+          <a href="/" class="text-2xl font-semibold">
+            <img src="{{ url_for('static', filename='images/lfc.png') }}" alt="LFC Canaanland" class="h-20">
+          </a>
+      
+          <!-- Navigation -->
+          <nav class="flex items-center space-x-6">
+            <a href="/about" class="hover:underline">About</a>
+            <a href="/donate" class="hover:underline">Donate</a>
+            <a href="/mandate" class="hover:underline">The Mandate</a>
+            <a href="/contact" class="hover:underline">Contact</a>
+      
+            {% if current_user.is_authenticated %}
+              <a href="{{ url_for('main.dashboard') }}" class="bg-white text-indigo-700 px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
+            {% else %}
+              <a href="{{ url_for('auth.login') }}" class="bg-white text-indigo-700 px-4 py-2 rounded hover:bg-gray-200">Login</a>
+              <a href="{{ url_for('auth.register') }}" class="border border-white px-4 py-2 rounded hover:bg-white hover:text-indigo-700">Register</a>
+            {% endif %}
+          </nav>
+        </div>
+      </header>
+      
+
+    <!-- Advanced Hero Section -->
+<section class="relative h-screen overflow-hidden">
+    <!-- Background Image -->
+    <div
+      class="absolute top-0 left-0 w-full h-full bg-cover bg-center transform scale-110 animate-hero-pan"
+      style="background-image: url('static/images/lfc-hero.png');">
+    </div>
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent"></div>
+    
+    <!-- Content -->
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+      <h1 class="text-5xl lg:text-7xl font-extrabold text-white drop-shadow-lg animate-fade-in">
+        Honor the Lord with Your Giving
+      </h1>
+      <p class="mt-4 text-lg lg:text-2xl text-gray-200 max-w-2xl animate-fade-in delay-200">
+        "Each of you should give what you have decided in your heart to give..." (2 Corinthians 9:7)<br/>
+        Your generosity is an act of worship—fueling missions, outreach, and the work of God in our world.
+      </p>
+      <div class="mt-8 flex space-x-4 animate-fade-in delay-400">
+        <a href="/donate" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition">
+          Donate Now
+        </a>
+        <a href="/about" class="border-2 border-white hover:border-indigo-300 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition">
+          Learn More
+        </a>
+      </div>
+    </div>
+  
+    <!-- SVG Wave Divider -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180">
+      <svg class="relative block w-full h-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M1200 120L0 16.48 0 0 1200 0z" class="fill-white"></path>
+      </svg>
+    </div>
+  </section>
+  
+  <!-- Tailwind Animations (add to your tailwind.config.js or in a <style> tag) -->
+  <style>
+    @keyframes hero-pan {
+      0% { transform: scale(1.1) translateY(0); }
+      50% { transform: scale(1.15) translateY(-10px); }
+      100% { transform: scale(1.1) translateY(0); }
+    }
+    .animate-hero-pan {
+      animation: hero-pan 20s ease-in-out infinite;
+    }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 1s forwards;
+    }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-400 { animation-delay: 0.4s; }
+  </style>
+  
+
+  <main class="container mx-auto px-6 py-12 space-y-24">
+
+    <!-- 1. Rotating Bible Verse (Featured) -->
+    <section class="relative bg-indigo-600 text-white rounded-lg overflow-hidden shadow-lg py-16 px-8 text-center">
+      <div class="absolute inset-0 bg-gradient-to-br from-indigo-700 to-indigo-500 opacity-75"></div>
+      <div class="relative z-10">
+        <h3 class="text-2xl lg:text-4xl font-extrabold mb-4">📖 Verse of the Moment</h3>
+        <p id="bible-verse" class="text-lg lg:text-2xl italic max-w-2xl mx-auto leading-relaxed"></p>
+      </div>
+    </section>
+  
+    <!-- 2. Classic Support CTA -->
+    <section id="support" class="text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold text-indigo-700 mb-4">Plant Seeds of Eternal Impact</h2>
+      <p class="text-gray-700 text-lg lg:text-xl mb-8 max-w-3xl mx-auto">
+        Every tithe is a seed of faith. When you give, you sow into lives, hope, and transformation—both now and forever.
+      </p>
+      <a href="{{ url_for('main.donate') }}">
+      <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition">
+        Donate Now
+      </button>
+        </a>
+    </section>
+  
+    <!-- 3. Don’t Forget Our Services -->
+<section id="overview" class="py-12">
+    <h2 class="text-2xl font-bold text-center mb-8">Don’t forget our services</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Card: Sunday Worship -->
+      <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center space-y-4">
+        <svg class="w-12 h-12 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/>
+        </svg>
+        <h4 class="text-xl font-semibold">Sunday Worship</h4>
+        <p class="text-lg text-gray-600"><span id="svc1-day">Sunday</span>,<br/> <span id="svc1-time">6:00 AM - 8:30AM - 10:30AM</span></p>
+      </div>
+  
+     
+      <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center space-y-4">
+        <svg class="w-12 h-12 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8M8 12h6m-6 5h4"/>
+        </svg>
+        <h4 class="text-xl font-semibold">Covenant Hour</h4>
+        <p class="text-lg text-gray-600"><span id="svc2-day">Monday - Friday</span>, <span id="svc2-time">5:30 AM</span></p>
+      </div>
+  
+      
+      <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center space-y-4">
+        <svg class="w-12 h-12 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14"/>
+        </svg>
+        <h4 class="text-xl font-semibold">Mid-Week Service</h4>
+        <p class="text-lg text-gray-600"><span id="svc3-day">Wednesday</span>, <span id="svc3-time">6:00PM</span></p>
+      </div>
+  
+      
+      <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center space-y-4">
+        <svg class="w-12 h-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        <h4 class="text-xl font-semibold">Cell Fellowship</h4>
+        <p class="text-lg text-gray-600"><span id="svc4-day">Saturday</span>, <span id="svc4-time">5:00 PM</span></p>
+      </div>
+    </div>
+  </section>
+  
+  </main>
+  
+  <!-- Bible Verse & Stats Scripts -->
+  <script>
+    // Verses array
+    const bibleVerses = [
+      "“Give, and it will be given to you...” – Luke 6:38",
+      "“God loves a cheerful giver.” – 2 Corinthians 9:7",
+      "“Honor the Lord with your first fruits...” – Proverbs 3:9",
+      "“Bring the whole tithe into the storehouse...” – Malachi 3:10"
+    ];
+    function getRandomVerse() {
+      document.getElementById('bible-verse').textContent = bibleVerses[Math.floor(Math.random() * bibleVerses.length)];
+    }
+    window.onload = getRandomVerse;
+
+  </script>
+  
 </body>
+<footer class="bg-gray-800 text-gray-300 relative pt-12">
+
+    <!-- Scroll-to-Top Button -->
+    <button
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      class="fixed bottom-6 right-6 bg-indigo-600 hover:bg-indigo-500 text-white p-3 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-transform transform hover:scale-110"
+      aria-label="Scroll to top">
+      ↑
+    </button>
+  
+    <!-- Main Footer Grid -->
+    <div class="max-w-7xl mx-auto px-6 pb-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+  
+      <!-- Logo & Tagline -->
+      <div class="space-y-4">
+        <img src="/static/images/lfc.png" alt="LFC Logo" class="h-14">
+        <p class="text-sm leading-relaxed">
+          Bringing community together in faith and fellowship.
+        </p>
+      </div>
+  
+      <!-- Quick Links -->
+      <div>
+        <h5 class="text-white font-semibold mb-4">Quick Links</h5>
+        <ul class="space-y-2 text-sm">
+            <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+            <li><a href="/about" class="hover:text-white transition-colors">About</a></li>
+            <li><a href="/donate" class="hover:text-white transition-colors">Donate</a></li>
+            <li><a href="/mandate" class="hover:text-white transition-colors">The Mandate</a></li>
+            <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
+          </ul>
+      </div>
+  
+      <!-- (Empty to keep 4-column symmetry) -->
+      <div></div>
+  
+      <!-- Social & Contact -->
+      <div class="space-y-4">
+        <h5 class="text-white font-semibold mb-4">Connect With Us</h5>
+        <div class="flex space-x-4 mb-4">
+          <!-- Facebook -->
+          <a href="https://facebook.com/WinnersWld" target="_blank" rel="noopener"
+             class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12H18l-.5 3h-2.5v7A10 10 0 0022 12z"/></svg>
+          </a>
+          <!-- Twitter -->
+          <a href="https://x.com/WinnersWLD/" target="_blank" rel="noopener"
+             class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 19c11 0 17-9.2 17-17v-.8A12.1 12.1 0 0027 1.7a12 12 0 01-3.4.9 6 6 0 002.6-3.4 12.1 12.1 0 01-3.8 1.5 6 6 0 00-10.3 5.5A17.2 17.2 0 012.1 2.4a6 6 0 001.9 8 6 6 0 01-2.7-.7v.1a6 6 0 004.8 5.9 6 6 0 01-2.7.1 6 6 0 005.6 4.2A12.1 12.1 0 012 21a17 17 0 009 2.6"/></svg>
+          </a>
+          <!-- Instagram -->
+          <a href="https://instagram.com/ft_canaanland" target="_blank" rel="noopener"
+             class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1 1 0 100 2 1 1 0 000-2z"/></svg>
+          </a>
+          <!-- YouTube -->
+        <a href="https://youtube.com/lfcww" target="_blank" rel="noopener noreferrer"
+        class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded"
+        aria-label="YouTube">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M23.5 6.2a2.8 2.8 0 00-1.9-2c-1.7-.5-8.6-.5-8.6-.5s-6.9 0-8.6.5a2.8 2.8 0 00-1.9 2A29.8 29.8 0 001 12a29.8 29.8 0 00.5 5.8 2.8 2.8 0 001.9 2c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.8 2.8 0 001.9-2A29.8 29.8 0 0024 12a29.8 29.8 0 00-.5-5.8zM9.7 15.5V8.5l6 3.5-6 3.5z"/>
+        </svg>
+        </a>
+        </div>
+        <p class="text-sm">
+          Email us at
+          <a href="mailto:info@lfcww.org" class="hover:text-white underline transition-colors">
+            info@lfcww.org
+          </a>
+        </p>
+      </div>
+  
+    </div>
+  
+    <!-- Bottom Divider & Copyright -->
+    <div class="border-t border-gray-700 mt-8 pt-6 pb-6">
+      <p class="text-center text-xs">&copy; 2025 Winners Chapel. All rights reserved.</p>
+    </div>
+  
+  </footer>
 </html>

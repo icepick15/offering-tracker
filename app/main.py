@@ -1,8 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, send_file, Response
+from flask import Blueprint, render_template, redirect, url_for, flash, request, send_file, Response, jsonify
 from flask_login import login_required, current_user
 from .forms import DonationForm
 from app.models import Donation
-import csv
 from io import BytesIO
 from . import db
 from reportlab.lib.pagesizes import letter
@@ -10,7 +9,11 @@ from reportlab.pdfgen import canvas
 from flask_paginate import Pagination
 from datetime import datetime, timezone
 import stripe
+import os
 
+
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+endpoint_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
 
 
 main_bp = Blueprint('main', __name__)
@@ -167,3 +170,59 @@ def payment_success():
 def payment_cancel():
     # Redirect back to dashboard with cancellation flag
     return redirect(url_for('main.dashboard', donation_status='cancelled'))
+
+@main_bp.route('/webhook', methods=['POST'])
+def stripe_webhook():
+    payload = request.data
+    sig_header = request.headers.get('stripe-signature')
+    webhook_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, webhook_secret
+        )
+    except ValueError as e:
+        print('⚠️ Invalid payload')
+        return jsonify(success=False), 400
+    except stripe.error.SignatureVerificationError as e:
+        print('⚠️ Invalid signature')
+        return jsonify(success=False), 400
+
+    # ✅ Handle checkout.session.completed
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        user_id = session['metadata'].get('user_id')
+        donation_type = session['metadata'].get('donation_type')
+        amount = session['amount_total'] / 100
+        charge_id = session.get('payment_intent')
+        status = session.get('payment_status')
+        customer_email = session.get('customer_details', {}).get('email')
+
+        # Prevent duplicates
+        existing = Donation.query.filter_by(stripe_charge_id=charge_id).first()
+        if not existing:
+            donation = Donation(
+                user_id=user_id,
+                amount=amount,
+                donation_type=donation_type,
+                stripe_charge_id=charge_id,
+                stripe_status=status,
+                timestamp=datetime.now(timezone.utc),
+                email=customer_email
+            )
+            db.session.add(donation)
+            db.session.commit()
+
+    return jsonify(success=True), 200
+
+@main_bp.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@main_bp.route('/mandate')
+def mandate():
+    return render_template('mandate.html')
+
+@main_bp.route('/about')
+def about():
+    return render_template('about.html')

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mandate</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+{% include 'partials/header.html' %}
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<section class="bg-white py-16 px-6 md:px-10 lg:px-24" x-data="{ tab: 'bishop' }">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">About Us</h2>
+
+    <!-- Tab Buttons -->
+    <div class="flex justify-center space-x-4 mb-10">
+      <button @click="tab = 'bishop'" :class="tab === 'bishop' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full font-semibold transition">Bishop David Oyedepo</button>
+      <button @click="tab = 'pillars'" :class="tab === 'pillars' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full font-semibold transition">12 Pillars</button>
+      <button @click="tab = 'mission'" :class="tab === 'mission' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full font-semibold transition">Mission Statement</button>
+    </div>
+
+    <!-- Content -->
+    <div class="bg-gray-50 rounded-3xl shadow-xl p-8 text-gray-700">
+      <!-- Bishop Section -->
+      <div x-show="tab === 'bishop'" x-transition>
+        <h2 class="text-3xl font-bold text-center mb-6 text-indigo-700">BISHOP DAVID O. OYEDEPO</h2>
+        
+    <h3 class="text-xl font-semibold text-center mb-4">Founder & President, Living Faith Church Worldwide</h3>
+
+    <p class="text-lg leading-relaxed mb-6">
+      Bishop David O. Oyedepo received a call into the ministry through a heavenly vision, where he saw a lineup of battered, beaten, tattered, deformed, groaning for escape. He began sobbing with them. In response to his question, ‘but why Lord?’ God answered, “But from the beginning it was not so, and now the hour has come to liberate the whole world from all oppression of the devil through the preaching of the word of faith and I AM sending you to undertake this task.” Today, he stands as an Apostle of Faith to the nations, the impact of whose ministry has continued to spread across many nations of the world.
+    </p>
+
+    <p class="text-lg leading-relaxed mb-6">
+      As an accomplished author, he has written over 100 titles, which circulate both in hard and online stores around the world. A number of these titles have been translated to other major languages of the world including French, Chinese, Spanish, and others. He is the Founder and President of Living Faith Church worldwide, aka Winners’ Chapel International, and presently oversees over 21,000 churches across Nigeria and several thousand across six major continents of the world.
+    </p>
+
+    <p class="text-lg leading-relaxed mb-6">
+      He is the founding and Senior Pastor of the Faith Tabernacle, Canaanland Ota, Nigeria, the international Headquarters of the Church, which is reputed to be the largest single congregation in the world. As a leader of renown, he has redefined leadership as an evolution of values. Today, he is spearheading a revolution in education across the nation, through his network of primary and secondary schools and the establishment of two thriving universities, namely, Covenant University, Ota, Lagos and Landmark University Omuaran, Kwara State, both in Nigeria.
+    </p>
+
+    <h4 class="text-xl font-semibold text-indigo-700 mb-4">Who is David Oyedepo?</h4>
+    <ul class="list-disc pl-6 space-y-2">
+      <li><strong>Born:</strong> September 27th, 1954. He began his academic career in Architecture and later went on to obtain a PhD in Human Development, from Honolulu University Hawaii, USA.</li>
+      <li><strong>Born again:</strong> February 19, 1969, at the age of 15.</li>
+      <li><strong>Received a call to full-time ministry:</strong> May 2, 1981, at the age of 26.</li>
+      <li><strong>Begins his teaching ministry:</strong> May 29, 1981, through a weekly fellowship called ‘Faith Liberation Hour’ and a monthly seminar.</li>
+      <li><strong>Church ministry initiation:</strong> December 11, 1983, with the first church plant, Living Faith World Outreach in Kaduna.</li>
+      <li><strong>Published first 2 books:</strong> 'The Miracle Seed' and 'The Law of Faith' – April 25, 1985.</li>
+      <li><strong>Founded Word of Faith Bible Institute:</strong> September 1, 1986, which now operates across many nations.</li>
+      <li><strong>Mission to Northern Nigeria:</strong> Began in May 1987.</li>
+      <li><strong>Acquired 13-acre property in Kaduna:</strong> September 1989, for Garden of Faith.</li>
+      <li><strong>Moved to Lagos:</strong> September 24, 1989, following a divine mandate.</li>
+      <li><strong>Founded Dominion Publishing House:</strong> July 1992, which now operates on an industrial scale and publishes Bibles.</li>
+      <li><strong>Led revival in Lagos Church:</strong> Taking it from 3,500 to 50,000 members from 1994-1999.</li>
+      <li><strong>Mission to Africa:</strong> Launched in January 1994 with a presence in over 41 nations.</li>
+      <li><strong>Acquired mission aircraft:</strong> September 18, 1996.</li>
+      <li><strong>Acquired 530 acres for Canaanland:</strong> May 1998.</li>
+      <li><strong>Built and dedicated Faith Tabernacle:</strong> September 1998-1999, the world’s largest church congregation.</li>
+      <li><strong>Founded Covenant University:</strong> October 2002, ranked among the elite universities of the world.</li>
+      <li><strong>Founded Landmark University:</strong> March 2011, pioneering in Nigerian university education.</li>
+      <li><strong>Led church growth revival in Lagos:</strong> 2015, doubling attendance twice in 6 months.</li>
+      <li><strong>By divine instruction:</strong> Planted over 21,000 home cells within one year at Faith Tabernacle in 2021.</li>
+      <li><strong>Led planting of churches worldwide:</strong> including 10,000 churches across Nigeria and 1,200 across 35 nations in 2020 despite COVID-19 restrictions.</li>
+      <li><strong>Current project:</strong> Construction of a 100,000-seat capacity sanctuary in progress since March 2021.</li>
+    </ul>
+      </div>
+
+      <!-- 12 Pillars Section -->
+      <div x-show="tab === 'pillars'" x-transition>
+        <h2 class="text-3xl font-bold text-center mb-8 text-indigo-700">12 Pillars</h2>
+        <p class="text-lg leading-relaxed">
+            <div class="max-w-5xl mx-auto">
+                
+                
+                <p class="text-lg mb-6 leading-relaxed">
+                  God commissioned the presiding Bishop of this commission with a Word of Faith ministry to our generation. Remember Paul said, <em>"...if the trumpet give an uncertain sound, who shall prepare himself to the battle?"</em> (1 Cor 14:8) As a Commission, we have experienced amazing testimonies ever since this commission was handed down - that is over thirty years now! The Holy Ghost further inspired the servant of God, Dr. David Oyedepo, to classify the Word of Faith He has committed into his hands into the specific areas of emphasis, in direct response to Isaiah 40:6, <em>"The voice said, Cry. And he said, What shall I cry?..."</em> He has named these 12 areas of emphasis as the 12 Pillars of our Commission. We have crossed Jordan into power, bearing the ark of liberation. Here are the 12 stones, after the order of Joshua 4:1-8, 20-24. Having stood firm upon these twelve stones! And they have resulted in breakthroughs - both for the ministry and all that are partakers with us, of the same grace.
+                </p>
+            
+                <div class="space-y-6 text-base md:text-lg">
+                  <p><strong>1) FAITH</strong><br>
+                  "For whatsoever is born of God overcometh the world: and this is the victory that overcometh the world, even our faith." (1 John 5:4; Ephesians 6:16)</p>
+            
+                  <p><strong>2) THE WORD</strong><br>
+                  "Who being the brightness of his glory, and the express image of his person, and upholding all things by the word of his power..." (John 1:1-12; Hebrews 1:3)</p>
+            
+                  <p><strong>3) THE SUPERNATURAL</strong><br>
+                  "The wind bloweth where it listeth, and thou hearest the sound thereof, but canst not tell whence it cometh, and whither it goeth: so is every one that is born of the Spirit." (Psalm 82:5-7; John 3:8)</p>
+            
+                  <p><strong>4) PRAISE</strong><br>
+                  "And when they began to sing and to praise, the Lord set ambushments against the children of Ammon, Moab, and mount Seir, which were come against Judah: and they were smitten." (2 Chro. 20:20-22; Psalm 67:1-7; 149:1-9)</p>
+            
+                  <p><strong>5) THE HOLY SPIRIT</strong><br>
+                  "And it shall come to pass in that day, that his burden shall be taken away from off thy shoulder, and his yoke from off thy neck, and the yoke shall be destroyed because of the anointing." (Acts 1:1-8; Isaiah 10:27)</p>
+            
+                  <p><strong>6) PROSPERITY</strong><br>
+                  "Beloved, I wish above all things that thou mayest prosper and be in health, even as thy soul prospereth." (3 John 2; Psalm 35:27; Zech. 1:17)</p>
+            
+                  <p><strong>7) VISION</strong><br>
+                  "Where there is no vision, the people perish: but he that keepeth the law, happy is he." (Proverbs 29:18, Jer. 29:11)</p>
+            
+                  <p><strong>8) PRAYER</strong><br>
+                  "And this is the confidence that we have in him, that, if we ask anything according to his will, he heareth us." (1 John 5:14)</p>
+            
+                  <p><strong>9) HEALING</strong><br>
+                  "That it might be fulfilled which was spoken by Esaias the prophet, saying, Himself took our infirmities, and bare our sicknesses." (Isaiah 53:3-4; Jer. 8:22; Matt. 8:17)</p>
+            
+                  <p><strong>10) WISDOM</strong><br>
+                  "And wisdom and knowledge shall be the stability of thy times, and strength of salvation: the fear of the Lord is his treasure." (Prov. 24:3-4, Isaiah 33:6)</p>
+            
+                  <p><strong>11) CONSECRATION</strong><br>
+                  "Nevertheless the foundation of God standeth sure, having this seal, the Lord knoweth them that are his. And let every one that nameth the name of Christ depart from iniquity." (Hebrews 12:14; 2 Tim. 2:19)</p>
+            
+                  <p><strong>12) SUCCESS</strong><br>
+                  "This book of the law shall not depart out of thy mouth; but thou shalt meditate therein day and night, that thou mayest observe to do according to all that is written therein: for then thou shalt make thy way prosperous, and then thou shalt have good success." (Joshua 1:8-10)</p>
+                </div>
+            
+                <!-- Mission Statement -->
+                <div class="mt-16">
+                  <h2 class="text-3xl font-bold text-center mb-6 text-indigo-700">Mission Statement</h2>
+                  <p class="text-lg leading-relaxed mb-4">
+                    Our Mandate for ministry was received from the LORD Himself in an 18-hour vision. During this vision, a commission was received from the LORD to liberate mankind in all facets of human existence, to restore broken destinies, and to bring healing to the sick and brokenhearted.
+                  </p>
+                  <blockquote class="italic border-l-4 border-indigo-500 pl-4 text-gray-700 font-semibold text-lg">
+                    “The hour has come to liberate the world from all oppressions of the devil through the preaching of the word of faith, and I am sending you to undertake this task.”
+                  </blockquote>
+                  <p class="mt-4 text-lg leading-relaxed">
+                    Today, testimonies of liberation through our messages, books, tapes, magazines and other periodicals are most humbling. The word of faith is working like fire for the liberation of mankind across the nations.
+                  </p>
+                </div>
+              </div>
+        </p>
+      </div>
+
+      <!-- Mission Statement Section -->
+      <div x-show="tab === 'mission'" x-transition>
+        <h2 class="text-3xl font-bold text-center mb-6 text-indigo-700">MISSION STATEMENT</h2>
+        <p class="text-lg leading-relaxed">
+            <div class="max-w-4xl mx-auto">
+            
+                <p class="text-lg leading-relaxed mb-4">
+                  <strong>Our Mandate for ministry</strong> was received from the LORD Himself in an 18-hour vision. During this vision, a commission was received from the LORD to liberate mankind in all facets of human existence, to restore broken destinies, and to bring healing to the sick and brokenhearted.
+                </p>
+            
+                <div class="my-6">
+                  <p class="font-semibold italic text-lg border-l-4 border-indigo-500 pl-4">
+                    “The hour has come to liberate the world from all oppressions of the devil through the preaching of the word of faith, and I am sending you to undertake this task.”
+                  </p>
+                </div>
+            
+                <p class="text-lg leading-relaxed">
+                  Today, testimonies of liberation through our messages, books, tapes, magazines and other periodicals are most humbling. The word of faith is working like fire for the liberation of mankind across the nations.
+                </p>
+              </div>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/footer.html' %}
+</html>
