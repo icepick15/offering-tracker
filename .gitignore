@@ -36,3 +36,4 @@ htmlcov/
 
 # Stripe CLI files (if used)
 .stripe/
+.vercel
