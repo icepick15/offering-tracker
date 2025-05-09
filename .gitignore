@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask instance folder
+instance/
+
+# Environment variables
+.env
+.env.*
+
+# macOS / Linux system files
+.DS_Store
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# VS Code settings (if applicable)
+.vscode/
+
+# Pytest / test cache
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# MySQL dump files (optional)
+*.sql
+
+# Log files
+*.log
+
+# Stripe CLI files (if used)
+.stripe/
