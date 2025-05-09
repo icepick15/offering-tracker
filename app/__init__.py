@@ -26,9 +26,6 @@ def create_app():
     # app.config['STRIPE_PUBLIC_KEY'] = os.getenv('STRIPE_PUBLIC_KEY')
     app.config['STRIPE_SECRET_KEY'] = os.getenv('STRIPE_SECRET_KEY')
 
-    # Print the keys for debugging
-    # print(f"STRIPE_PUBLIC_KEY: {app.config['STRIPE_PUBLIC_KEY']}")
-    print(f"STRIPE_SECRET_KEY: {app.config['STRIPE_SECRET_KEY']}")
 
     # Set Stripe API key
     stripe.api_key = app.config['STRIPE_SECRET_KEY']

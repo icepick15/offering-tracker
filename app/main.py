@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, send_file, Response, jsonify
 from flask_login import login_required, current_user
-from .forms import DonationForm
+from app.forms import DonationForm
 from app.models import Donation
 from io import BytesIO
 from . import db
@@ -9,7 +9,42 @@ from reportlab.pdfgen import canvas
 from flask_paginate import Pagination
 from datetime import datetime, timezone
 import stripe
+
+import psycopg2
+from dotenv import load_dotenv
 import os
+
+# Load environment variables
+load_dotenv()
+
+# Fetch variables
+USER = os.getenv("user")
+PASSWORD = os.getenv("password")
+HOST = os.getenv("host")
+PORT = os.getenv("port")
+DBNAME = os.getenv("dbname")
+
+# Connect
+try:
+    connection = psycopg2.connect(
+        user=USER,
+        password=PASSWORD,
+        host=HOST,
+        port=PORT,
+        dbname=DBNAME
+    )
+    print("✅ Connection successful!")
+
+    cursor = connection.cursor()
+    cursor.execute("SELECT NOW();")
+    print("🕒 Current time:", cursor.fetchone())
+
+    cursor.close()
+    connection.close()
+    print("🔌 Connection closed.")
+
+except Exception as e:
+    print(f"❌ Failed to connect: {e}")
 
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
