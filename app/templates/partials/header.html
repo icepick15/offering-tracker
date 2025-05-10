@@ -1,24 +1,59 @@
+<!-- Header -->
 <header class="bg-indigo-700 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
       
       <!-- Logo -->
       <a href="/" class="text-2xl font-semibold">
-        <img src="{{ url_for('static', filename='images/lfc.png') }}" alt="LFC Canaanland" class="h-20">
+        <img src="{{ url_for('static', filename='images/lfc.png') }}" alt="LFC Canaanland" class="h-16 sm:h-20">
       </a>
   
       <!-- Navigation -->
-      <nav class="flex items-center space-x-6">
-        <a href="/about" class="hover:underline">About</a>
-        <a href="/donate" class="hover:underline">Donate</a>
-        <a href="/mandate" class="hover:underline">The Mandate</a>
-        <a href="/contact" class="hover:underline">Contact</a>
-  
-        {% if current_user.is_authenticated %}
-          <a href="{{ url_for('main.dashboard') }}" class="bg-white text-indigo-700 px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
-        {% else %}
-          <a href="{{ url_for('auth.login') }}" class="bg-white text-indigo-700 px-4 py-2 rounded hover:bg-gray-200">Login</a>
-          <a href="{{ url_for('auth.register') }}" class="border border-white px-4 py-2 rounded hover:bg-white hover:text-indigo-700">Register</a>
-        {% endif %}
+      <nav class="flex items-center space-x-6 lg:space-x-12">
+        <!-- Desktop menu items -->
+        <div class="hidden lg:flex space-x-6">
+          <a href="/about" class="hover:underline">About</a>
+          <a href="/donate" class="hover:underline">Donate</a>
+          <a href="/mandate" class="hover:underline">The Mandate</a>
+          <a href="/contact" class="hover:underline">Contact</a>
+      
+          {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.dashboard') }}" class="bg-white text-indigo-700 px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
+          {% else %}
+            <a href="{{ url_for('auth.login') }}" class="bg-white text-indigo-700 px-4 py-2 rounded hover:bg-gray-200">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="border border-white px-4 py-2 rounded hover:bg-white hover:text-indigo-700">Register</a>
+          {% endif %}
+        </div>
+      
+        <!-- Mobile Hamburger Menu -->
+        <div class="lg:hidden">
+          <button class="text-white" id="mobile-menu-button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
       </nav>
+      
+      <!-- Mobile Menu -->
+      <div class="lg:hidden hidden" id="mobile-menu">
+        <a href="/about" class="block text-white py-2">About</a>
+        <a href="/donate" class="block text-white py-2">Donate</a>
+        <a href="/mandate" class="block text-white py-2">The Mandate</a>
+        <a href="/contact" class="block text-white py-2">Contact</a>
+        
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('main.dashboard') }}" class="block text-white py-2 bg-indigo-700">Dashboard</a>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}" class="block text-white py-2">Login</a>
+          <a href="{{ url_for('auth.register') }}" class="block text-white py-2">Register</a>
+        {% endif %}
+      </div>
+      
+      <script>
+        document.getElementById('mobile-menu-button').onclick = function() {
+          const menu = document.getElementById('mobile-menu');
+          menu.classList.toggle('hidden');
+        }
+      </script>
     </div>
   </header>

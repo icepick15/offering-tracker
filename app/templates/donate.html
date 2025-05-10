@@ -9,31 +9,8 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-  <!-- Header -->
-  <header class="bg-indigo-700 text-white p-4">
-    <div class="container mx-auto flex justify-between items-center">
-      
-      <!-- Logo -->
-      <a href="/" class="text-2xl font-semibold">
-        <img src="{{ url_for('static', filename='images/lfc.png') }}" alt="LFC Canaanland" class="h-20">
-      </a>
-  
-      <!-- Navigation -->
-      <nav class="flex items-center space-x-6">
-        <a href="/about" class="hover:underline">About</a>
-        <a href="/donate" class="hover:underline">Donate</a>
-        <a href="/mandate" class="hover:underline">The Mandate</a>
-        <a href="/contact" class="hover:underline">Contact</a>
-  
-        {% if current_user.is_authenticated %}
-          <a href="{{ url_for('main.dashboard') }}" class="bg-white text-indigo-700 px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
-        {% else %}
-          <a href="{{ url_for('auth.login') }}" class="bg-white text-indigo-700 px-4 py-2 rounded hover:bg-gray-200">Login</a>
-          <a href="{{ url_for('auth.register') }}" class="border border-white px-4 py-2 rounded hover:bg-white hover:text-indigo-700">Register</a>
-        {% endif %}
-      </nav>
-    </div>
-  </header>
+ <!-- Header -->
+ {% include 'partials/header.html' %}
 
   <main class="min-h-screen flex items-center justify-center px-4">
     <div class="bg-white shadow-xl rounded-xl p-8 max-w-md w-full">
@@ -63,85 +40,6 @@
     </div>
   </main>
 
-  <footer class="bg-gray-800 text-gray-300 relative pt-12">
-
-    <!-- Scroll-to-Top Button -->
-    <button
-      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-      class="fixed bottom-6 right-6 bg-indigo-600 hover:bg-indigo-500 text-white p-3 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-transform transform hover:scale-110"
-      aria-label="Scroll to top">
-      ↑
-    </button>
-  
-    <!-- Main Footer Grid -->
-    <div class="max-w-7xl mx-auto px-6 pb-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-  
-      <!-- Logo & Tagline -->
-      <div class="space-y-4">
-        <img src="/static/images/lfc.png" alt="LFC Logo" class="h-14">
-        <p class="text-sm leading-relaxed">
-          Bringing community together in faith and fellowship.
-        </p>
-      </div>
-  
-      <!-- Quick Links -->
-      <div>
-        <h5 class="text-white font-semibold mb-4">Quick Links</h5>
-        <ul class="space-y-2 text-sm">
-          <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
-          <li><a href="/about" class="hover:text-white transition-colors">About</a></li>
-          <li><a href="/donate" class="hover:text-white transition-colors">Donate</a></li>
-          <li><a href="/mandate" class="hover:text-white transition-colors">The Mandate</a></li>
-          <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
-        </ul>
-      </div>
-  
-      <!-- (Empty to keep 4-column symmetry) -->
-      <div></div>
-  
-      <!-- Social & Contact -->
-      <div class="space-y-4">
-        <h5 class="text-white font-semibold mb-4">Connect With Us</h5>
-        <div class="flex space-x-4 mb-4">
-          <!-- Facebook -->
-          <a href="https://facebook.com/WinnersWld" target="_blank" rel="noopener"
-             class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12H18l-.5 3h-2.5v7A10 10 0 0022 12z"/></svg>
-          </a>
-          <!-- Twitter -->
-          <a href="https://x.com/WinnersWLD/" target="_blank" rel="noopener"
-             class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 19c11 0 17-9.2 17-17v-.8A12.1 12.1 0 0027 1.7a12 12 0 01-3.4.9 6 6 0 002.6-3.4 12.1 12.1 0 01-3.8 1.5 6 6 0 00-10.3 5.5A17.2 17.2 0 012.1 2.4a6 6 0 001.9 8 6 6 0 01-2.7-.7v.1a6 6 0 004.8 5.9 6 6 0 01-2.7.1 6 6 0 005.6 4.2A12.1 12.1 0 012 21a17 17 0 009 2.6"/></svg>
-          </a>
-          <!-- Instagram -->
-          <a href="https://instagram.com/ft_canaanland" target="_blank" rel="noopener"
-             class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1 1 0 100 2 1 1 0 000-2z"/></svg>
-          </a>
-          <!-- YouTube -->
-        <a href="https://youtube.com/lfcww" target="_blank" rel="noopener noreferrer"
-        class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded"
-        aria-label="YouTube">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M23.5 6.2a2.8 2.8 0 00-1.9-2c-1.7-.5-8.6-.5-8.6-.5s-6.9 0-8.6.5a2.8 2.8 0 00-1.9 2A29.8 29.8 0 001 12a29.8 29.8 0 00.5 5.8 2.8 2.8 0 001.9 2c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.8 2.8 0 001.9-2A29.8 29.8 0 0024 12a29.8 29.8 0 00-.5-5.8zM9.7 15.5V8.5l6 3.5-6 3.5z"/>
-        </svg>
-        </a>
-        </div>
-        <p class="text-sm">
-          Email us at
-          <a href="mailto:info@lfcww.org" class="hover:text-white underline transition-colors">
-            info@lfcww.org
-          </a>
-        </p>
-      </div>
-  
-    </div>
-  
-    <!-- Bottom Divider & Copyright -->
-    <div class="border-t border-gray-700 mt-8 pt-6 pb-6">
-      <p class="text-center text-xs">&copy; 2025 Faith Tabernacle. All rights reserved.</p>
-    </div>
-  </footer>
-
 </body>
+{% include 'partials/footer.html' %}
 </html>
