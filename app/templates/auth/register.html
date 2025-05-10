@@ -7,17 +7,20 @@
   <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-{% include 'partials/header.html' %}
-<body class="h-full flex items-center justify-center">
-  <div class="max-w-md w-full px-6 py-8 bg-white rounded-2xl shadow-xl">
+
+<body class="bg-gray-50">
+
+  {% include 'partials/header.html' %}
+
+  <!-- Main Content -->
+  <div class="max-w-md w-full px-6 py-8 mx-auto bg-white rounded-2xl shadow-xl">
     <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-2">Create Account</h2>
     <p class="text-center text-gray-500 mb-6">Sign up to get started</p>
-
 
     <form method="POST" class="space-y-6">
       {{ form.hidden_tag() }}
 
-      <!-- Username -->
+      <!-- Username Field -->
       <div>
         {{ form.username.label(class="block text-sm font-medium text-gray-700") }}
         <div class="mt-1">
@@ -32,7 +35,7 @@
         {% endif %}
       </div>
 
-      <!-- Email -->
+      <!-- Email Field -->
       <div>
         {{ form.email.label(class="block text-sm font-medium text-gray-700") }}
         <div class="mt-1">
@@ -47,7 +50,7 @@
         {% endif %}
       </div>
 
-      <!-- Password -->
+      <!-- Password Field -->
       <div>
         {{ form.password.label(class="block text-sm font-medium text-gray-700") }}
         <div class="mt-1">
@@ -62,7 +65,7 @@
         {% endif %}
       </div>
 
-      <!-- Confirm Password -->
+      <!-- Confirm Password Field -->
       <div>
         {{ form.confirm_password.label(class="block text-sm font-medium text-gray-700") }}
         <div class="mt-1">
@@ -77,7 +80,7 @@
         {% endif %}
       </div>
 
-      <!-- Submit -->
+      <!-- Submit Button -->
       <div>
         {{ form.submit(class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500") }}
       </div>
@@ -89,7 +92,8 @@
       </p>
     </form>
   </div>
-  {% include 'partials/footer.html' %}
-</body>
 
+  {% include 'partials/footer.html' %}
+
+</body>
 </html>
