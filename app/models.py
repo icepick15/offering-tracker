@@ -38,5 +38,5 @@ class Donation(db.Model):
     user = db.relationship('User', backref=db.backref('donations', lazy=True))
     stripe_charge_id = db.Column(db.String(100))
     stripe_status = db.Column(db.String(50))
-    email = db.Column(db.String(255), nullable=True)
+    # email = db.Column(db.String(255), nullable=True)
 

@@ -14,38 +14,40 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 
-# Load environment variables
+## Load environment variables from .env file
 load_dotenv()
 
-# Fetch variables
-USER = os.getenv("user")
-PASSWORD = os.getenv("password")
-HOST = os.getenv("host")
-PORT = os.getenv("port")
-DBNAME = os.getenv("dbname")
+def connect_to_db():
+    try:
+        # Establish a connection to the PostgreSQL database
+        conn = psycopg2.connect(
+            user=os.getenv('user'),
+            password=os.getenv('password'),
+            database=os.getenv('dbname'),
+            host=os.getenv('host'),
+            port=os.getenv('port')
+        )
 
-# Connect
-try:
-    connection = psycopg2.connect(
-        user=USER,
-        password=PASSWORD,
-        host=HOST,
-        port=PORT,
-        dbname=DBNAME
-    )
-    print("✅ Connection successful!")
+        # Create a cursor object to interact with the database
+        cursor = conn.cursor()
 
-    cursor = connection.cursor()
-    cursor.execute("SELECT NOW();")
-    print("🕒 Current time:", cursor.fetchone())
+        # Execute a simple query to check connection
+        cursor.execute("SELECT NOW();")
+        result = cursor.fetchone()
+        print("✅ Connection successful!")
+        print("🕒 Current time:", result)
 
-    cursor.close()
-    connection.close()
-    print("🔌 Connection closed.")
+        # Close the cursor and connection
+        cursor.close()
+        conn.close()
+        print("🔌 Connection closed.")
 
-except Exception as e:
-    print(f"❌ Failed to connect: {e}")
+    except Exception as e:
+        print("Error: Unable to connect to the database")
+        print(e)
 
+# Just call the DB function normally in the application lifecycle
+connect_to_db()
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 endpoint_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
@@ -176,7 +178,7 @@ def payment_success():
         return redirect(url_for('main.dashboard'))
 
     session = stripe.checkout.Session.retrieve(session_id)
-    customer_email = session['customer_details']['email']
+    # email = session['customer_details']['email']
     amount = session['amount_total'] / 100  # Convert back from kobo
     donation_type = session['metadata'].get('donation_type')
     user_id = session['metadata'].get('user_id')
@@ -231,7 +233,7 @@ def stripe_webhook():
         amount = session['amount_total'] / 100
         charge_id = session.get('payment_intent')
         status = session.get('payment_status')
-        customer_email = session.get('customer_details', {}).get('email')
+        # customer_email = session.get('customer_details', {}).get('email')
 
         # Prevent duplicates
         existing = Donation.query.filter_by(stripe_charge_id=charge_id).first()
@@ -243,7 +245,7 @@ def stripe_webhook():
                 stripe_charge_id=charge_id,
                 stripe_status=status,
                 timestamp=datetime.now(timezone.utc),
-                email=customer_email
+                # email=customer_email
             )
             db.session.add(donation)
             db.session.commit()

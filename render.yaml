@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: offering-tracker
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: "python index.py"
+    envVars:
+      - key: FLASK_ENV
+        value: production
